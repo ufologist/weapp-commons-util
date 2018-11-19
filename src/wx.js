@@ -49,28 +49,53 @@ export function redirectTo(options) {
  * 封装原生的 navigateBack 方法
  * 
  * - 回退页面时调用回退页的特定方法
+ * - 判断预期返回的页面
  * 
  * @param options
- * @param options._triggerOnNavigateBack 调用回退页中的 _onNavigateBack 方法
- * @param options._onNavigateBackArgs 传入 _onNavigateBack 方法的参数
+ *        options._triggerOnNavigateBack 调用回退页中的 _onNavigateBack 方法
+ *        options._onNavigateBackArgs 传入 _onNavigateBack 方法的参数
+ *        options._expectedBackUrl 预期返回的页面 URL
  */
 export function navigateBack(options = {}) {
-    var originalSuccessCallback = options.success;
-    if (originalSuccessCallback) {
-        options.success = function() {
-            originalSuccessCallback();
+    var _options = extend({}, options);
 
-            if (options._triggerOnNavigateBack) {
-                invokePageMethod('_onNavigateBack', [options._onNavigateBackArgs]);
-            }
-        };
-    } else {
-        options.success = function() {
-            if (options._triggerOnNavigateBack) {
-                invokePageMethod('_onNavigateBack', [options._onNavigateBackArgs]);
-            }
+    // 包装成功方法
+    _options.success = options.success;
+    if (_options._triggerOnNavigateBack) {
+        _options.success = function() {
+            options.success && options.success();
+            invokePageMethod('_onNavigateBack', [_options._onNavigateBackArgs]);
         };
     }
 
-    return wx.navigateBack(options);
+    // 预期返回的页面
+    if (_options._expectedBackUrl) {
+        var pages = getCurrentPages();
+
+        if (pages.length === 1) { // 没有上一页
+            _options.url = _options._expectedBackUrl;
+            // XXX tabbar 的页面算是第一个页面
+            return navigateTo(_options);
+        } else {
+            var delta = isNaN(parseInt(_options.delta)) ? 1 : parseInt(_options.delta);
+            if (delta >= pages.length) { // 首页
+                delta = pages.length - 1;
+            } else if (delta <= 0) { // 上一页
+                delta = 1;
+            }
+
+            // 需要排掉当前页
+            var backPage = pages[pages.length - (delta + 1)];
+
+            // 回退的页面符合预期直接回退
+            if (backPage.route.indexOf(_options._expectedBackUrl) != -1) {
+                return wx.navigateBack(_options);
+            } else { // 不符合预期则跳转到预期页面
+                _options.url = _options._expectedBackUrl;
+                return navigateTo(_options);
+            }
+        }
+    } else { // 兜底
+        return wx.navigateBack(_options);
+    }
 };
