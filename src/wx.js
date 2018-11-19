@@ -9,7 +9,7 @@ import {
 /**
  * 封装原生的 navigateTo 方法
  * 
- * - 解决只允许 10 层路由的问题
+ * - 解决微信小程序只允许跳转 10 层路由的问题, 超过限制后自动变为 redirectTo 跳转页面
  * 
  * @param {object} options
  *                 options._urlParams {object} 需要追加到 URL 上的参数
@@ -27,6 +27,22 @@ export function navigateTo(options) {
     } else {
         return wx.redirectTo(_options);
     }
+};
+
+/**
+ * 封装原生的 redirectTo 方法
+ * 
+ * @param {object} options
+ *                 options._urlParams {object} 需要追加到 URL 上的参数
+ */
+export function redirectTo(options) {
+    var _options = extend({}, options);
+
+    if (_options._urlParams) {
+        _options.url = appendUrl(_options.url, _options._urlParams);
+    }
+
+    return wx.redirectTo(_options);
 };
 
 /**

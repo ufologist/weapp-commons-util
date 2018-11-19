@@ -10,6 +10,7 @@ import {
 
 import {
     navigateTo,
+    redirectTo,
     navigateBack
 } from './wx.js';
 
@@ -23,5 +24,6 @@ export {
     isGetPhoneNumberSuccess,
 
     navigateTo,
+    redirectTo,
     navigateBack
 };
