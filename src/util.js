@@ -52,7 +52,7 @@ export function invokePageMethod(methodName, args, index) {
     var lastIndex = pages.length - 1;
 
     // 默认取当前页面
-    var _index = typeof index != 'undefined' ? index : lastIndex;
+    var _index = typeof index !== 'undefined' ? index : lastIndex;
     if (_index <= 0) { // 首页
         _index = 0;
     } else if (_index >= lastIndex) { // 当前页
@@ -62,7 +62,7 @@ export function invokePageMethod(methodName, args, index) {
     }
 
     var page = pages[_index];
-    if (page[methodName]) {
+    if (page && page[methodName]) {
         return page[methodName].apply(page, args);
     }
 };

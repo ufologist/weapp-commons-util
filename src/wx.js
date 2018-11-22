@@ -51,10 +51,10 @@ export function redirectTo(options) {
  * - 回退页面时调用回退页的特定方法
  * - 判断预期返回的页面
  * 
- * @param options
- *        options._triggerOnNavigateBack 调用回退页中的 _onNavigateBack 方法
- *        options._onNavigateBackArgs 传入 _onNavigateBack 方法的参数
- *        options._expectedBackUrl 预期返回的页面 URL
+ * @param {object} options
+ *                 options._triggerOnNavigateBack {boolean|string} 激活时默认调用回退页中的 _onNavigateBack 方法, 如果传入的是字符串则表示方法名, 指定调用回退页面中的该方法
+ *                 options._onNavigateBackArgs {array<any>} 传入 _onNavigateBack 方法的参数
+ *                 options._expectedBackUrl {string} 预期返回的页面 URL
  */
 export function navigateBack(options = {}) {
     var _options = extend({}, options);
@@ -64,7 +64,10 @@ export function navigateBack(options = {}) {
     if (_options._triggerOnNavigateBack) {
         _options.success = function() {
             options.success && options.success();
-            invokePageMethod('_onNavigateBack', [_options._onNavigateBackArgs]);
+
+            var methodName = typeof _options._triggerOnNavigateBack === 'boolean' ?
+                             '_onNavigateBack' : _options._triggerOnNavigateBack;
+            invokePageMethod(methodName, [_options._onNavigateBackArgs]);
         };
     }
 
