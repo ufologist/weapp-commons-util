@@ -1,6 +1,7 @@
 import {
     appendUrl,
     getCurrentPageUrl,
+    getCurrentPageUrlParams,
     reloadCurrentPage,
     invokePageMethod,
     checkUpdate,
@@ -17,6 +18,7 @@ import {
 export {
     appendUrl,
     getCurrentPageUrl,
+    getCurrentPageUrlParams,
     reloadCurrentPage,
     invokePageMethod,
     checkUpdate,

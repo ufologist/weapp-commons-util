@@ -29,6 +29,22 @@ export function getCurrentPageUrl(stripQuery) {
 };
 
 /**
+ * 获取当前页面的 URL 参数
+ *
+ * @returns {object} 页面的 URL 参数
+ */
+export function getCurrentPageUrlParams() {
+    var urlParams = {};
+    var pages = getCurrentPages();
+    if (pages) {
+        var currentPage = pages[pages.length - 1];
+        urlParams = currentPage.options;
+    }
+
+    return urlParams;
+};
+
+/**
  * 刷新当前页面
  * 
  * @param {boolean} stripQuery 是否去除页面的 query 参数, 默认不去除
