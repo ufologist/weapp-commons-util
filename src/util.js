@@ -95,7 +95,14 @@ export function appendUrl(url, params) {
     var _params = params;
 
     if (typeof _params === 'object') {
-        _params = qs.stringify(_params);
+        // 排除 undefined 的属性
+        var filteredUndefined = {};
+        for (var key in _params) {
+            if (typeof _params[key] !== 'undefined') {
+                filteredUndefined[key] = _params[key];
+            }
+        }
+        _params = qs.stringify(filteredUndefined);
     }
 
     if (_params) {
