@@ -187,3 +187,21 @@ export function isGetUserInfoSuccess(userInfoResult) {
 export function isGetPhoneNumberSuccess(phoneResult) {
     return phoneResult.errMsg.indexOf('getPhoneNumber:fail') == -1;
 };
+
+/**
+ * 获取 CSS 样式字符串
+ * 
+ * {position:'absolute',top:'104rpx'} => position:absolute;top:10rpx;
+ * 
+ * @param {object} styleObject
+ * @return {string}
+ */
+export function getCssString(styleObject) {
+    var style = [];
+    if (styleObject) {
+        for (var key in styleObject) {
+            style.push(`${key}:${styleObject[key]}`);
+        }
+    }
+    return style.join(';');
+};

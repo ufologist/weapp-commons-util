@@ -6,7 +6,8 @@ import {
     invokePageMethod,
     checkUpdate,
     isGetUserInfoSuccess,
-    isGetPhoneNumberSuccess
+    isGetPhoneNumberSuccess,
+    getCssString
 } from './util.js';
 
 import {
@@ -24,6 +25,7 @@ export {
     checkUpdate,
     isGetUserInfoSuccess,
     isGetPhoneNumberSuccess,
+    getCssString,
 
     navigateTo,
     redirectTo,
