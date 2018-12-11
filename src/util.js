@@ -207,7 +207,7 @@ export function isGetPhoneNumberSuccess(phoneResult) {
 /**
  * 获取 CSS 样式字符串
  * 
- * {position:'absolute',top:'104rpx'} => position:absolute;top:10rpx;
+ * {position:'absolute',top:'10rpx'} => position:absolute;top:10rpx;
  * 
  * @param {object} styleObject
  * @return {string}

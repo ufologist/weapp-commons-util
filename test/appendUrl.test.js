@@ -2,8 +2,6 @@ import {
     appendUrl
 } from '../src/index.js';
 
-import qs from 'querystringify';
-
 describe('拼接不带 querystring 的 URL', function() {
     test('拼接字符串', function() {
         expect(appendUrl('https://domain.com', 'a=1')).toBe('https://domain.com?a=1');
