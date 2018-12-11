@@ -86,11 +86,16 @@ export function invokePageMethod(methodName, args, index) {
 /**
  * 在 URL 上追加参数
  * 
- * @param {string} url 
- * @param {string | object} params 
+ * @param {string} url
+ * @param {string | object} params 要追加在 URL 上的参数
+ * @param {boolean} replaceExistParams 如果原 URL 中已经有了待追加的参数, 是否覆盖, 默认不覆盖
+ *                                     注意会使原 URL 中的重复参数合并成一个
+ *                                     例如: https://domain.com?a=1&a=2&b=3
+ *                                     追加 a=4
+ *                                     最终 https://domain.com?a=4&b=3
  * @return {string} 追加了参数的 URL
  */
-export function appendUrl(url, params) {
+export function appendUrl(url, params, replaceExistParams) {
     var _url = url;
     var _params = params;
 
@@ -103,6 +108,17 @@ export function appendUrl(url, params) {
             }
         }
         _params = qs.stringify(filteredUndefined);
+    }
+
+    if (replaceExistParams && url.indexOf('?') !== -1) {
+        var urlAndQs = url.split('?');
+        var querystring = '';
+        _url = urlAndQs[0];
+        querystring = urlAndQs[1];
+
+        var originalParams = qs.parse(querystring);
+        _params = extend({}, originalParams, qs.parse(_params));
+        _params = qs.stringify(_params);
     }
 
     if (_params) {
