@@ -16,3 +16,22 @@
 [![npm-image](https://nodei.co/npm/weapp-commons-util.png?downloads=true&downloadRank=true&stars=true)](https://npmjs.com/package/weapp-commons-util)
 
 微信小程序通用工具库
+
+## APIDoc
+
+[ESDoc](https://doc.esdoc.org/github.com/ufologist/weapp-commons-util/)
+
+* `util` - 工具函数
+  * `appendUrl`
+  * `checkUpdate`
+  * `getCssString`
+  * `getCurrentPageUrl`
+  * `getCurrentPageUrlParams`
+  * `invokePageMethod`
+  * `isGetPhoneNumberSuccess`
+  * `isGetUserInfoSuccess`
+  * `reloadCurrentPage`
+* `wx` - 包装 wx 的方法
+  * `navigateBack`
+  * `navigateTo`
+  * `redirectTo`
