@@ -17,6 +17,19 @@
 
 微信小程序通用工具库
 
+## Example
+
+```javascript
+import {
+    appendUrl
+} from 'weapp-commons-util';
+
+appendUrl('https://domain.com', {
+    a: 1,
+    b: 2
+});
+```
+
 ## APIDoc
 
 [ESDoc](https://doc.esdoc.org/github.com/ufologist/weapp-commons-util/)
