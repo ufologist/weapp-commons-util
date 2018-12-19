@@ -221,3 +221,75 @@ export function getCssString(styleObject) {
     }
     return style.join(';');
 };
+
+/**
+ * 判断用户是否有授权过某些权限
+ * 
+ * - 如果用户未接受或拒绝过此权限，会弹窗询问用户，用户点击同意后方可调用接口
+ * - 如果用户已授权，可以直接调用接口；
+ * - 如果用户已拒绝授权，则不会出现弹窗，而是直接进入接口 fail 回调。请开发者兼容用户拒绝授权的场景。
+ * 
+ * @param {string | array<string>} scopes 单个或者多个权限码
+ * @return Promise<boolean>
+ * @see https://developers.weixin.qq.com/miniprogram/dev/api/wx.getSetting.html
+ * @see https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/authorize.html
+ */
+export function hasAuth(scopes) {
+    return new Promise(function(resolve, reject) {
+        wx.getSetting({
+            success: function(result) {
+                var hasScopesAuth = false;
+
+                if (Object.prototype.toString.call(scopes) === '[object Array]') {
+                    for (var i = 0, length = scopes.length > 0; i < length; i++) {
+                        hasScopesAuth = result.authSetting[scopes[i]];
+                        if (!hasScopesAuth) {
+                            break;
+                        }
+                    }
+                } else  {
+                    hasScopesAuth = result.authSetting[scopes];
+                }
+
+                resolve(hasScopesAuth);
+            },
+            fail: function(result) {
+                console.error('hasAuth', result);
+                reject(result);
+            }
+        });
+    });
+};
+
+/**
+ * 获取 HTTP 返回结果中的 header 值
+ * 
+ * 例如 header 的名称有如下类型
+ * - Connection 单个单词的
+ * - ETag 缩写没有使用连字符的
+ * - Content-Type 多个单词使用了连字符的
+ * 
+ * @param {object} headerObject 开发者服务器返回的 HTTP Response Header
+ * @param {string} name
+ * @returns {string}
+ * @see https://developers.weixin.qq.com/miniprogram/dev/api/wx.request.html
+ */
+export function getHttpResponseHeaderValue(headerObject, name) {
+    var original = name;
+
+    var lowerCaseWords = name.split('-').map(function(item) {
+        return item.toLowerCase();
+    });
+
+    var lowerCaseHyphen = lowerCaseWords.map(function(item) {
+        return item.toLowerCase();
+    }).join('-');
+
+    var upperCaseHyphen = lowerCaseWords.map(function(item) {
+        return item.charAt(0).toUpperCase() + item.substring(1);
+    }).join('-');
+
+    return headerObject[original]
+        || headerObject[lowerCaseHyphen]
+        || headerObject[upperCaseHyphen];
+};

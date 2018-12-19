@@ -7,7 +7,9 @@ import {
     checkUpdate,
     isGetUserInfoSuccess,
     isGetPhoneNumberSuccess,
-    getCssString
+    getCssString,
+    hasAuth,
+    getHttpResponseHeaderValue
 } from './util.js';
 
 import {
@@ -26,6 +28,8 @@ export {
     isGetUserInfoSuccess,
     isGetPhoneNumberSuccess,
     getCssString,
+    hasAuth,
+    getHttpResponseHeaderValue,
 
     navigateTo,
     redirectTo,
