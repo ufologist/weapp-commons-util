@@ -40,6 +40,8 @@ appendUrl('https://domain.com', {
   * `getCssString`
   * `getCurrentPageUrl`
   * `getCurrentPageUrlParams`
+  * `getHttpResponseHeaderValue`
+  * `hasAuth`
   * `invokePageMethod`
   * `isGetPhoneNumberSuccess`
   * `isGetUserInfoSuccess`
