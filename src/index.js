@@ -15,6 +15,7 @@ import {
 import {
     navigateTo,
     redirectTo,
+    switchTab,
     navigateBack
 } from './wx.js';
 
@@ -33,5 +34,6 @@ export {
 
     navigateTo,
     redirectTo,
+    switchTab,
     navigateBack
 };
