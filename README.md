@@ -50,3 +50,4 @@ appendUrl('https://domain.com', {
   * `navigateBack`
   * `navigateTo`
   * `redirectTo`
+  * `switchTab`
