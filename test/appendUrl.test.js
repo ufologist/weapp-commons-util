@@ -33,6 +33,11 @@ describe('拼接参数时使用 URL 编码', function() {
             a: '中文'
         })).toBe('https://domain.com?a=%E4%B8%AD%E6%96%87');
     });
+    test('拼接对象参数如果已经做过 URI 编码, 不做二次编码', function() {
+        expect(appendUrl('https://domain.com', {
+            a: '%E4%B8%AD%E6%96%87'
+        })).toBe('https://domain.com?a=%E4%B8%AD%E6%96%87');
+    });
 });
 
 test('拼接空对象', function() {
@@ -70,5 +75,9 @@ describe('参数去重', function() {
             a: 2,
             b: 3
         }, true)).toBe('https://domain.com?a=2&b=3');
+        expect(appendUrl('https://domain.com?a=%E4%B8%AD%E6%96%87', {
+            a: '%E6%B5%8B%E8%AF%95',
+            b: 3
+        }, true)).toBe('https://domain.com?a=%E6%B5%8B%E8%AF%95&b=3');
     });
 });

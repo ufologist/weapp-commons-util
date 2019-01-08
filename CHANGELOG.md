@@ -1,5 +1,9 @@
 # CHANGELOG
 
+* v0.0.4 2019-1-8
+
+  * [fix] `appendUrl` 将对象追加到 URL 作为参数时存在二次编码的 bug
+
 * v0.0.3 2019-1-7
 
   * [feat] 封装的 `navigateTo` 调用失败时尝试降级为 `switchTab` 来完成跳转

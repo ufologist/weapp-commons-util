@@ -104,7 +104,11 @@ export function appendUrl(url, params, replaceExistParams) {
         var filteredUndefined = {};
         for (var key in _params) {
             if (typeof _params[key] !== 'undefined') {
-                filteredUndefined[key] = _params[key];
+                // 由于 `params` 中的参数可能已经做过 URL 编码了
+                // 如果再调用 `qs.stringify(params)` 会造成二次编码
+                // 外部使用时需要解码(`decodeURIComponent`)两次, 但对于外部来说只解码一次才是正常的
+                // 因此这里先解码一次
+                filteredUndefined[key] = decodeURIComponent(_params[key]);
             }
         }
         _params = qs.stringify(filteredUndefined);
